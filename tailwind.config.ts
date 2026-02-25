@@ -11,8 +11,8 @@ const config: Config = {
         'dubai-gold-dark': '#B8964D',
       },
       fontFamily: {
-        'sans': ['var(--font-inter)', 'system-ui', 'sans-serif'],
-        'display': ['var(--font-playfair)', 'serif'],
+        'sans': ['system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
+        'display': ['Georgia', 'Cambria', 'Times New Roman', 'serif'],
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-in-out',
