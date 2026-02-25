@@ -1,0 +1,236 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Barbershop {
+  id             String        @id @default(uuid())
+  name           String
+  slug           String        @unique
+  logo           String?
+  whatsappNumber String
+  createdAt      DateTime      @default(now())
+
+  barbers        Barber[]
+  services       Service[]
+  appointments   Appointment[]
+  customers      Customer[]
+  galleries      Gallery[]
+
+  @@index([slug])
+  @@map("barbershops")
+}
+
+model Barber {
+  id                String         @id @default(uuid())
+  barbershopId      String
+  name              String
+  description       String?
+  imageUrl          String?
+  defaultStartTime  String         @default("09:00") // HH:mm format
+  defaultEndTime    String         @default("18:00")
+  isActive          Boolean        @default(true)
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+
+  barbershop        Barbershop     @relation(fields: [barbershopId], references: [id])
+  appointments      Appointment[]
+  availability      Availability[]
+  waitlist          Waitlist[]
+
+  @@index([barbershopId])
+  @@map("barbers")
+}
+
+model Service {
+  id          String        @id @default(uuid())
+  barbershopId String
+  name        String
+  description String?
+  duration    Int           // em minutos
+  price       Decimal       @db.Decimal(10, 2)
+  isActive    Boolean       @default(true)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  barbershop   Barbershop    @relation(fields: [barbershopId], references: [id])
+  appointments Appointment[]
+  waitlist     Waitlist[]
+
+  @@index([barbershopId])
+  @@map("services")
+}
+
+model Customer {
+  id          String        @id @default(uuid())
+  barbershopId String
+  name        String
+  phone       String
+  email       String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  barbershop   Barbershop    @relation(fields: [barbershopId], references: [id])
+  appointments Appointment[]
+  waitlist     Waitlist[]
+
+  @@unique([barbershopId, phone])
+  @@index([barbershopId])
+  @@map("customers")
+}
+
+enum AppointmentStatus {
+  pending
+  confirmed
+  canceled
+  completed
+  no_show
+}
+
+model Appointment {
+  id            String            @id @default(uuid())
+  barbershopId  String
+  barberId      String
+  serviceId     String
+  customerId    String
+  date          DateTime          @db.Date
+  time          String            // HH:mm format
+  status        AppointmentStatus @default(pending)
+  reminderSent  Boolean           @default(false)
+  notes         String?
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+
+  barbershop    Barbershop        @relation(fields: [barbershopId], references: [id])
+  barber        Barber            @relation(fields: [barberId], references: [id])
+  service       Service           @relation(fields: [serviceId], references: [id])
+  customer      Customer          @relation(fields: [customerId], references: [id])
+  review        Review?
+  reminders     Reminder[]
+
+  @@index([barbershopId])
+  @@index([barbershopId, barberId, date])
+  @@index([barberId, date, time])
+  @@index([customerId])
+  @@map("appointments")
+}
+
+model Gallery {
+  id           String      @id @default(uuid())
+  barbershopId String
+  imageUrl     String
+  caption      String?
+  createdAt    DateTime    @default(now())
+
+  barbershop   Barbershop  @relation(fields: [barbershopId], references: [id])
+
+  @@index([barbershopId])
+  @@map("gallery")
+}
+
+model Availability {
+  id              String    @id @default(uuid())
+  barberId        String
+  date            DateTime  @db.Date
+  isAvailable     Boolean   @default(true)
+  customStartTime String?   // HH:mm format
+  customEndTime   String?   // HH:mm format
+  notes           String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  barber          Barber    @relation(fields: [barberId], references: [id])
+
+  @@unique([barberId, date])
+  @@map("availability")
+}
+
+model Waitlist {
+  id          String    @id @default(uuid())
+  barberId    String
+  serviceId   String
+  customerId  String
+  date        DateTime  @db.Date
+  position    Int
+  notified    Boolean   @default(false)
+  expiresAt   DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  barber      Barber    @relation(fields: [barberId], references: [id])
+  service     Service   @relation(fields: [serviceId], references: [id])
+  customer    Customer  @relation(fields: [customerId], references: [id])
+
+  @@index([barberId, date])
+  @@index([customerId])
+  @@map("waitlist")
+}
+
+model Review {
+  id            String    @id @default(uuid())
+  appointmentId String    @unique
+  rating        Int       // 1-5
+  comment       String?
+  approved      Boolean   @default(false)
+  token         String    @unique
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  appointment   Appointment @relation(fields: [appointmentId], references: [id])
+
+  @@map("reviews")
+}
+
+enum ReminderType {
+  reminder_24h
+  reminder_2h
+  review_request
+}
+
+enum ReminderStatus {
+  pending
+  sent
+  failed
+}
+
+model Reminder {
+  id            String         @id @default(uuid())
+  appointmentId String
+  type          ReminderType
+  status        ReminderStatus @default(pending)
+  scheduledFor  DateTime
+  sentAt        DateTime?
+  error         String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  appointment   Appointment    @relation(fields: [appointmentId], references: [id])
+
+  @@index([status, scheduledFor])
+  @@map("reminders")
+}
+
+enum IntegrationStatus {
+  pending
+  sent
+  failed
+}
+
+model IntegrationQueue {
+  id          String            @id @default(uuid())
+  eventType   String
+  payload     String            @db.Text // JSON
+  status      IntegrationStatus @default(pending)
+  retries     Int               @default(0)
+  lastAttempt DateTime?
+  error       String?
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  @@index([status, retries])
+  @@map("integration_queue")
+}

@@ -1,0 +1,91 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "cleanup-node-artifacts",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-ExecutionPolicy",
+				"Bypass",
+				"-Command",
+				"if (Test-Path node_modules) { Remove-Item -Recurse -Force node_modules }; if (Test-Path package-lock.json) { Remove-Item -Force package-lock.json }; Write-Output \"cleanup-ok\""
+			]
+		},
+		{
+			"label": "npm-install-clean",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"install"
+			]
+		},
+		{
+			"label": "npm-install-finalize",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"install",
+				"--no-audit",
+				"--no-fund"
+			]
+		},
+		{
+			"label": "check-node-processes",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"Get-Process npm,node -ErrorAction SilentlyContinue | Select-Object Name,Id,Path | Format-Table -AutoSize"
+			]
+		},
+		{
+			"label": "scan-npm-errors",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"Get-ChildItem \"$env:LOCALAPPDATA\\npm-cache\\_logs\\*debug-0.log\" | Sort-Object LastWriteTime -Descending | Select-Object -First 6 | ForEach-Object { \"--- $($_.Name) ---\"; Select-String -Path $_.FullName -Pattern \"ERR!|error|verbose exit|code E|ENOENT|EACCES|EPERM\" -CaseSensitive:$false | Select-Object -First 20 | ForEach-Object { $_.Line } }"
+			]
+		},
+		{
+			"label": "clean-and-install-ignore-scripts",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-ExecutionPolicy",
+				"Bypass",
+				"-Command",
+				"if (Test-Path node_modules) { Remove-Item -Recurse -Force node_modules }; if (Test-Path package-lock.json) { Remove-Item -Force package-lock.json }; npm install --ignore-scripts --no-audit --no-fund"
+			]
+		},
+		{
+			"label": "install-react-only",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"install",
+				"react",
+				"react-dom",
+				"next",
+				"--ignore-scripts",
+				"--no-audit",
+				"--no-fund"
+			]
+		},
+		{
+			"label": "npm-cache-clean",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"cache",
+				"clean",
+				"--force"
+			]
+		}
+	]
+}
