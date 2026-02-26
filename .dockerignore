@@ -1,0 +1,14 @@
+node_modules
+.next
+.git
+.gitignore
+*.md
+.env
+.env*.local
+.vscode
+.vs
+npm-debug.log*
+build.log
+npm-install.log
+deploy.ps1
+git-sync.ps1
