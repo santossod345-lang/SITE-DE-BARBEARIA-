@@ -4,31 +4,61 @@ import { useState } from 'react';
 
 interface ReviewFormProps {
   professionals: string[];
+  appointmentId?: string;
+  token?: string;
 }
 
-export default function ReviewForm({ professionals }: ReviewFormProps) {
+export default function ReviewForm({ professionals, appointmentId, token }: ReviewFormProps) {
   const [name, setName] = useState('');
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
   const [barber, setBarber] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [hoveredStar, setHoveredStar] = useState(0);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
+
     if (!name || !rating || !comment || !barber) return;
-    
-    // Prepared for future API integration
-    // await createReview({ name, rating, comment, barber });
-    
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      setName('');
-      setRating(0);
-      setComment('');
-      setBarber('');
-    }, 3000);
+    if (!appointmentId || !token) {
+      setError('Link de avaliação inválido. Use o link enviado pelo WhatsApp.');
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const res = await fetch('/api/reviews', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          appointmentId,
+          token,
+          rating,
+          comment,
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data?.error || 'Não foi possível enviar sua avaliação.');
+      }
+
+      setSubmitted(true);
+      setTimeout(() => {
+        setSubmitted(false);
+        setName('');
+        setRating(0);
+        setComment('');
+        setBarber('');
+      }, 3000);
+    } catch (err: any) {
+      setError(err.message || 'Não foi possível enviar sua avaliação.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (submitted) {
@@ -44,6 +74,9 @@ export default function ReviewForm({ professionals }: ReviewFormProps) {
   return (
     <form onSubmit={handleSubmit} className="card space-y-4">
       <h3 className="text-xl font-display text-dubai-gold mb-2">Deixe sua avaliação</h3>
+      {!!error && (
+        <p className="text-red-400 text-sm">{error}</p>
+      )}
       
       <div>
         <label className="text-sm text-gray-400 mb-1 block">Seu nome</label>
@@ -105,10 +138,10 @@ export default function ReviewForm({ professionals }: ReviewFormProps) {
 
       <button
         type="submit"
-        disabled={!name || !rating || !comment || !barber}
+        disabled={!name || !rating || !comment || !barber || loading}
         className="btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        Enviar Avaliação
+        {loading ? 'Enviando...' : 'Enviar Avaliação'}
       </button>
     </form>
   );

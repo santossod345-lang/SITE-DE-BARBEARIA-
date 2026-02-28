@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import { siteConfig } from '@/lib/site-config';
 
 export const metadata: Metadata = {
-  title: 'Agendar | Barbearia do Alves',
-  description: 'Acesse o fluxo de agendamento da Barbearia do Alves.',
+  title: 'Agendar | Barbearia Alves',
+  description: 'Acesse o fluxo de agendamento da Barbearia Alves.',
 };
 
 export default function AgendarPage() {
@@ -14,7 +14,7 @@ export default function AgendarPage() {
         Escolha o profissional e agende pelo ClientFlow para garantir disponibilidade em tempo real.
       </p>
 
-      <div className="grid gap-6 md:grid-cols-2 mb-10">
+      <div className="grid gap-4 sm:gap-6 md:grid-cols-2 mb-10">
         {siteConfig.professionals.map((pro) => (
           <div key={pro.name} className="card text-center animate-slide-up">
             <div className="w-16 h-16 rounded-full bg-gradient-to-br from-dubai-gold to-dubai-gold-dark flex items-center justify-center text-dubai-black text-2xl font-display font-bold mx-auto mb-4">
@@ -27,7 +27,7 @@ export default function AgendarPage() {
                 href={siteConfig.bookingUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="btn-primary"
+                className="btn-primary w-full text-center"
               >
                 ✂️ Agendar com {pro.name}
               </a>
@@ -35,7 +35,7 @@ export default function AgendarPage() {
                 href={`https://wa.me/${pro.whatsapp}?text=Olá! Gostaria de agendar um horário com ${pro.name}.`}
                 target="_blank"
                 rel="noreferrer"
-                className="btn-secondary"
+                className="btn-secondary w-full text-center"
               >
                 💬 WhatsApp
               </a>

@@ -4,8 +4,8 @@ import ProfessionalCard from '@/components/ProfessionalCard';
 import { fetchReviews, calculateAverageRating } from '@/services/api';
 
 export const metadata: Metadata = {
-  title: 'Profissionais | Barbearia do Alves',
-  description: 'Conheça Bruno e Paulo, os profissionais da Barbearia do Alves.',
+  title: 'Profissionais | Barbearia Alves',
+  description: 'Conheça Bruno e Paulo, os profissionais da Barbearia Alves.',
 };
 
 export default async function ProfissionaisPage() {

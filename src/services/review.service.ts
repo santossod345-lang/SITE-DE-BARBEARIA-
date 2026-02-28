@@ -47,7 +47,7 @@ export class ReviewService {
         token: data.token,
         rating: data.rating,
         comment: data.comment,
-        approved: false, // Precisa aprovação
+        approved: true,
       },
       include: {
         appointment: {

@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
 
     return apiResponse({
       success: true,
-      message: 'Avaliação enviada! Aguardando aprovação.',
+      message: 'Avaliação enviada com sucesso!',
     }, 201);
   } catch (error: any) {
     return apiError(error.message, 400);

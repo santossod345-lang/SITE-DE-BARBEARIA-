@@ -3,8 +3,8 @@ import { fetchGallery } from '@/services/api';
 import GalleryGrid from '@/components/GalleryGrid';
 
 export const metadata: Metadata = {
-  title: 'Galeria | Barbearia do Alves',
-  description: 'Confira os trabalhos realizados pela equipe da Barbearia do Alves.',
+  title: 'Galeria | Barbearia Alves',
+  description: 'Confira os trabalhos realizados pela equipe da Barbearia Alves.',
 };
 
 export default async function GaleriaPage() {

@@ -16,7 +16,7 @@ export default async function HomePage() {
           <p className="text-dubai-gold/80 text-sm uppercase tracking-widest mb-4 animate-fade-in">
             Estilo &amp; Precisão
           </p>
-          <h1 className="font-display text-5xl sm:text-7xl text-dubai-gold mb-6 text-shadow-gold animate-slide-up">
+          <h1 className="font-display text-4xl sm:text-7xl text-dubai-gold mb-6 text-shadow-gold animate-slide-up">
             {siteConfig.name}
           </h1>
           <p className="text-gray-300 max-w-2xl mx-auto text-base sm:text-lg mb-4 animate-fade-in">
@@ -27,11 +27,11 @@ export default async function HomePage() {
             <StarRating rating={avgRating} size="md" showValue />
             <span className="text-gray-400 text-sm">({reviews.length} avaliações)</span>
           </div>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up">
-            <a href={siteConfig.bookingUrl} target="_blank" rel="noreferrer" className="btn-primary text-lg">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center animate-slide-up">
+            <a href={siteConfig.bookingUrl} target="_blank" rel="noreferrer" className="btn-primary text-base sm:text-lg w-full sm:w-auto">
               ✂️ Agendar Agora
             </a>
-            <Link href="/profissionais" className="btn-secondary text-lg">
+            <Link href="/profissionais" className="btn-secondary text-base sm:text-lg w-full sm:w-auto text-center">
               Conheça a Equipe
             </Link>
           </div>
@@ -67,17 +67,17 @@ export default async function HomePage() {
       {/* Serviços Destaque */}
       <section className="max-w-6xl mx-auto px-4 py-12">
         <h2 className="section-title text-center mb-10">Nossos Serviços</h2>
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
           <article className="card">
-            <h3 className="text-2xl text-dubai-gold font-display mb-2">Corte Premium</h3>
+            <h3 className="text-xl sm:text-2xl text-dubai-gold font-display mb-2">Corte Premium</h3>
             <p className="text-gray-400">Acabamento de alto nível com técnica personalizada para o seu perfil.</p>
           </article>
           <article className="card">
-            <h3 className="text-2xl text-dubai-gold font-display mb-2">Barba Completa</h3>
+            <h3 className="text-xl sm:text-2xl text-dubai-gold font-display mb-2">Barba Completa</h3>
             <p className="text-gray-400">Modelagem, alinhamento e finalização para um visual impecável.</p>
           </article>
           <article className="card">
-            <h3 className="text-2xl text-dubai-gold font-display mb-2">Experiência Completa</h3>
+            <h3 className="text-xl sm:text-2xl text-dubai-gold font-display mb-2">Experiência Completa</h3>
             <p className="text-gray-400">Pacote completo para quem busca presença e sofisticação.</p>
           </article>
         </div>
@@ -120,7 +120,7 @@ export default async function HomePage() {
           <p className="text-gray-400 mb-8">
             Agende agora mesmo com um dos nossos profissionais e viva a experiência {siteConfig.name}.
           </p>
-          <a href={siteConfig.bookingUrl} target="_blank" rel="noreferrer" className="btn-primary text-lg">
+          <a href={siteConfig.bookingUrl} target="_blank" rel="noreferrer" className="btn-primary text-base sm:text-lg w-full sm:w-auto">
             ✂️ Agendar Agora
           </a>
         </div>
@@ -128,3 +128,4 @@ export default async function HomePage() {
     </div>
   );
 }
+

@@ -4,8 +4,8 @@ import { fetchServices } from '@/services/api';
 import { formatCurrency } from '@/lib/utils';
 
 export const metadata: Metadata = {
-  title: 'Serviços | Barbearia do Alves',
-  description: 'Conheça os serviços premium da Barbearia do Alves.',
+  title: 'Serviços | Barbearia Alves',
+  description: 'Conheça os serviços premium da Barbearia Alves.',
 };
 
 export default async function ServicosPage() {
@@ -18,15 +18,15 @@ export default async function ServicosPage() {
         Atendimento de alta qualidade com foco em resultado e experiência.
       </p>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {services.map((service: any) => (
-          <article key={service.id || service.name} className="card animate-slide-up group">
-            <h2 className="text-2xl font-display text-dubai-gold mb-2">{service.name}</h2>
+          <article key={service.id || service.name} className="card animate-slide-up group p-4 sm:p-6">
+            <h2 className="text-xl sm:text-2xl font-display text-dubai-gold mb-2">{service.name}</h2>
             <p className="text-gray-400 text-sm mb-4">{service.description}</p>
             {(service.price || service.duration) && (
               <div className="flex items-center justify-between border-t border-dubai-gold/10 pt-3 mt-auto">
                 {service.price && (
-                  <span className="text-dubai-gold font-semibold">
+                  <span className="text-dubai-gold font-semibold text-base sm:text-lg">
                     {formatCurrency(service.price)}
                   </span>
                 )}

@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import { siteConfig } from '@/lib/site-config';
 
 export const metadata: Metadata = {
-  title: 'Localização | Barbearia do Alves',
-  description: 'Veja como chegar na Barbearia do Alves.',
+  title: 'Localização | Barbearia Alves',
+  description: 'Veja como chegar na Barbearia Alves.',
 };
 
 export default function LocalizacaoPage() {
@@ -21,13 +21,13 @@ export default function LocalizacaoPage() {
         <iframe
           src={siteConfig.mapEmbedUrl}
           width="100%"
-          height="400"
+          height="100%"
           style={{ border: 0 }}
           allowFullScreen
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"
-          title="Localização da Barbearia do Alves"
-          className="w-full"
+          title="Localização da Barbearia Alves"
+          className="w-full h-[300px] sm:h-[400px]"
         />
       </div>
 
@@ -43,7 +43,7 @@ export default function LocalizacaoPage() {
             href={mapsSearchUrl}
             target="_blank"
             rel="noreferrer"
-            className="btn-primary inline-block"
+            className="btn-primary inline-block w-full sm:w-auto text-center"
           >
             🗺️ Como Chegar
           </a>
@@ -71,10 +71,12 @@ export default function LocalizacaoPage() {
       </div>
 
       <div className="text-center mt-10">
-        <a href={siteConfig.bookingUrl} target="_blank" rel="noreferrer" className="btn-primary inline-block text-lg">
+        <a href={siteConfig.bookingUrl} target="_blank" rel="noreferrer" className="btn-primary inline-block text-base sm:text-lg w-full sm:w-auto">
           ✂️ Agendar Agora
         </a>
       </div>
     </div>
   );
 }
+
+

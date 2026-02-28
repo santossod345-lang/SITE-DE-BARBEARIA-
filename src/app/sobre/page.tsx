@@ -3,8 +3,8 @@ import Link from 'next/link';
 import { siteConfig } from '@/lib/site-config';
 
 export const metadata: Metadata = {
-  title: 'Sobre | Barbearia do Alves',
-  description: 'Conheça a história e proposta da Barbearia do Alves.',
+  title: 'Sobre | Barbearia Alves',
+  description: 'Conheça a história e proposta da Barbearia Alves.',
 };
 
 export default function SobrePage() {

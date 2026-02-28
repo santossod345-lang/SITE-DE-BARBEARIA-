@@ -16,6 +16,9 @@
 # misc
 .DS_Store
 *.pem
+.vs/
+build.log
+npm-install.log
 
 # debug
 npm-debug.log*

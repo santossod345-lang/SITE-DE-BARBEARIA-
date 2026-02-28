@@ -14,15 +14,15 @@
 
 @layer components {
   .btn-primary {
-    @apply bg-dubai-gold hover:bg-dubai-gold-light text-dubai-black font-semibold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl hover:shadow-dubai-gold/30;
+    @apply bg-dubai-gold hover:bg-dubai-gold-light text-dubai-black font-semibold py-2.5 px-5 sm:py-3 sm:px-8 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl hover:shadow-dubai-gold/30;
   }
 
   .btn-secondary {
-    @apply border-2 border-dubai-gold text-dubai-gold hover:bg-dubai-gold hover:text-dubai-black font-semibold py-3 px-8 rounded-lg transition-all duration-300;
+    @apply border-2 border-dubai-gold text-dubai-gold hover:bg-dubai-gold hover:text-dubai-black font-semibold py-2.5 px-5 sm:py-3 sm:px-8 rounded-lg transition-all duration-300;
   }
 
   .card {
-    @apply bg-gradient-to-br from-zinc-900 to-black border border-dubai-gold/20 rounded-xl p-6 shadow-2xl hover:shadow-dubai-gold/10 transition-all duration-300;
+    @apply bg-gradient-to-br from-zinc-900 to-black border border-dubai-gold/20 rounded-xl p-4 sm:p-6 shadow-2xl hover:shadow-dubai-gold/10 transition-all duration-300;
   }
 
   .input-dubai {
@@ -30,7 +30,7 @@
   }
 
   .section-title {
-    @apply font-display text-4xl md:text-5xl lg:text-6xl text-dubai-gold mb-4 tracking-tight;
+    @apply font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-dubai-gold mb-4 tracking-tight;
   }
 
   .luxury-divider {
@@ -39,6 +39,15 @@
 }
 
 @layer utilities {
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
   .text-shadow-gold {
     text-shadow: 0 0 20px rgba(198, 167, 94, 0.3);
   }

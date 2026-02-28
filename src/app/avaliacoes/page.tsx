@@ -1,12 +1,11 @@
 import type { Metadata } from 'next';
 import { fetchReviews, calculateAverageRating } from '@/services/api';
 import ReviewCard from '@/components/ReviewCard';
-import ReviewForm from '@/components/ReviewForm';
 import StarRating from '@/components/StarRating';
 
 export const metadata: Metadata = {
-  title: 'Avaliações | Barbearia do Alves',
-  description: 'Depoimentos sobre a experiência na Barbearia do Alves.',
+  title: 'Avaliações | Barbearia Alves',
+  description: 'Depoimentos sobre a experiência na Barbearia Alves.',
 };
 
 export default async function AvaliacoesPage() {
@@ -33,7 +32,6 @@ export default async function AvaliacoesPage() {
       </div>
 
       <div className="grid gap-8 lg:grid-cols-3">
-        {/* Lista de avaliações */}
         <div className="lg:col-span-2">
           <div className="grid gap-4 sm:grid-cols-2">
             {reviews.map((review: any) => (
@@ -49,11 +47,16 @@ export default async function AvaliacoesPage() {
           </div>
         </div>
 
-        {/* Formulário */}
         <div>
-          <ReviewForm professionals={['Bruno', 'Paulo']} />
+          <div className="card text-gray-300 animate-slide-up">
+            <h3 className="text-xl font-display text-dubai-gold mb-3">Quer deixar sua avaliação?</h3>
+            <p className="text-sm text-gray-400">
+              As avaliações são enviadas por link individual após a conclusão do atendimento.
+            </p>
+          </div>
         </div>
       </div>
     </div>
   );
 }
+
